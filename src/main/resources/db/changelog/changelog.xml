@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.3.xsd">
+
+    <changeSet id="1" author="maks_vish">
+        <createSequence sequenceName="city_id_seq" incrementBy="1" maxValue="10000" minValue="1" startValue="4"/>
+    </changeSet>
+
+    <changeSet id="2" author="maks_vish">
+        <createSequence sequenceName="sights_id_seq" incrementBy="1" maxValue="10000" minValue="1" startValue="10"/>
+    </changeSet>
+
+    <changeSet id="3" author="maks_vish">
+        <createTable tableName="city">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="id_pk"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="population" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="metro_available" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="4" author="maks_vish">
+        <createTable tableName="sights">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="id_sights_pk"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="construction_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="short_description" type="varchar(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type_sight" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city_id" type="bigint">
+
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="sights" baseColumnNames="city_id" constraintName="cityId_fk"
+                                 referencedTableName="city"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="5" author="maks_vish">
+        <insert tableName="city">
+            <column name="id" value="1"/>
+            <column name="name" value="Кемерово"/>
+            <column name="population" value="552546"/>
+            <column name="metro_available" value="false"/>
+            <column name="country" value="Россия"/>
+        </insert>
+
+        <insert tableName="city">
+            <column name="id" value="2"/>
+            <column name="name" value="Томск"/>
+            <column name="population" value="589701"/>
+            <column name="metro_available" value="false"/>
+            <column name="country" value="Россия"/>
+        </insert>
+
+        <insert tableName="city">
+            <column name="id" value="3"/>
+            <column name="name" value="Москва"/>
+            <column name="population" value="12635466"/>
+            <column name="metro_available" value="true"/>
+            <column name="country" value="Россия"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="6" author="maks_vish">
+        <insert tableName="sights">
+            <column name="id" value="1"></column>
+            <column name="name" value="Памятник шахтёрам Кузбасса"/>
+            <column name="construction_date" value="28-03-2003"/>
+            <column name="short_description" value="Монумент в городе Кемерово, посвящённый погибшим шахтёрам.Скульптура Эрнста Неизвестного открыта в 2003 году на территории музея-заповедника «Красная Горка» на вершине холма, возвышающегося над городом и рекой Томь."/>
+            <column name="type_sight" value="MONUMENT"/>
+            <column name="city_id" value="1"/>
+        </insert>
+
+        <insert tableName="sights">
+            <column name="id" value="2"></column>
+            <column name="name" value="Мемориал Славы"/>
+            <column name="construction_date" value="09-05-1970"/>
+            <column name="short_description" value="Мемориал высотой 18 метров выполнен из белого камня, на котором высечены две фигуры воинов, один из которых держит победоносное знамя,другой, с автоматом в руках, преклонил колени, в верхней части изображен Орден Отечественной войны, ниже надпись: «Слава кузбассовцам, павшим за Родину 1941–1945»."/>
+            <column name="type_sight" value="MONUMENT"/>
+            <column name="city_id" value="1"/>
+        </insert>
+
+        <insert tableName="sights">
+            <column name="id" value="3"></column>
+            <column name="name" value="Музыкальный театр Кузбасса им.А. Боброва"/>
+            <column name="construction_date" value="09-06-1943"/>
+            <column name="short_description" value="Музыкальный театр в городе Кемерово, назван в честь заслуженного народного артиста РСФСР Александра Константиновича Боброва."/>
+            <column name="type_sight" value="BUILDING"/>
+            <column name="city_id" value="1"/>
+        </insert>
+
+        <insert tableName="sights">
+            <column name="id" value="4"></column>
+            <column name="name" value="Памятник рублю"/>
+            <column name="construction_date" value="12-06-2008"/>
+            <column name="short_description" value="Монумент из дерева, посвященный национальной валюте. Его вес составляет 250 кг, а высота – более 2 метров."/>
+            <column name="type_sight" value="MONUMENT"/>
+            <column name="city_id" value="2"/>
+        </insert>
+
+        <insert tableName="sights">
+            <column name="id" value="5"></column>
+            <column name="name" value="Томский областной краеведческий музей"/>
+            <column name="construction_date" value="18-03-1922"/>
+            <column name="short_description" value="Самое крупное собрание Томской области, содержащие более 140 тысяч экспонатов."/>
+            <column name="type_sight" value="BUILDING"/>
+            <column name="city_id" value="2"/>
+        </insert>
+
+        <insert tableName="sights">
+            <column name="id" value="6"></column>
+            <column name="name" value="Памятник Счастью"/>
+            <column name="construction_date" value="05-09-2005"/>
+            <column name="short_description" value="Веселый памятник сытому волку – персонажу известного мультфильма «Жил-был пёс».Скульптура изображает животное в момент наивысшего удовольствия – после сытного ужина в доме хозяев его друга пса."/>
+            <column name="type_sight" value="MONUMENT"/>
+            <column name="city_id" value="2"/>
+        </insert>
+
+        <insert tableName="sights">
+            <column name="id" value="7"></column>
+            <column name="name" value="Храм Василия Блаженного"/>
+            <column name="construction_date" value="12-07-1561"/>
+            <column name="short_description" value="Один из самых значимых памятников древнерусской архитектуры XVI в.Возведен по велению царя Ивана Грозного в честь покорения Казанского царства."/>
+            <column name="type_sight" value="BUILDING"/>
+            <column name="city_id" value="3"/>
+        </insert>
+
+        <insert tableName="sights">
+            <column name="id" value="8"></column>
+            <column name="name" value="Большой театр"/>
+            <column name="construction_date" value="28-03-1776"/>
+            <column name="short_description" value="Один из крупнейших в России и один из самых значительных в мире театров оперы и балета."/>
+            <column name="type_sight" value="BUILDING"/>
+            <column name="city_id" value="3"/>
+        </insert>
+
+        <insert tableName="sights">
+            <column name="id" value="9"></column>
+            <column name="name" value="Рабочий и колхозница"/>
+            <column name="construction_date" value="28-03-1776"/>
+            <column name="short_description" value="Памятник монументального искусства, «идеал и символ советской эпохи», признанный «эталон социалистического реализма»."/>
+            <column name="type_sight" value="MONUMENT"/>
+            <column name="city_id" value="3"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>
